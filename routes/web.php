@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,3 +22,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware'=>['auth','admin']], function () {
+    
+    Route::get('/role', [RoleController::class, '__invoke'])->name('role');
+
+    });
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware'=>['auth','admin']], function () {
+    
+    Route::get('/index', [RoleController::class, '__invoke'])->name('role');
+    
+    });
