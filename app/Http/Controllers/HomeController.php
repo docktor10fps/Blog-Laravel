@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-       
-        return view('home', compact('posts'));
+        $posts =Post::all();
+        $comments = Comment::all();
+        $userId = Auth::id();
+        return view('home', compact('posts','comments','userId'));
     }
 }

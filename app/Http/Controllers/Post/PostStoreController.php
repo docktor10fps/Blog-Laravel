@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
 
-class StoreController extends Controller
+class PostStoreController extends Controller
 {
     public function __invoke(PostRequest $request)
     {
+        
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');

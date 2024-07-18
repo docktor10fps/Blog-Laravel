@@ -1,66 +1,83 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="posts-container">
+        @foreach ($posts as $post)
+            <div class="post">
+                @can('update', $post)
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="#"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ route('posts.edit', $post->id) }}">Edit <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn " onclick="return confirm('Are you sure you want to delete this post?');">delete</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                @endcan
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @foreach($posts as $post)
-                        <!-- Post 1 -->
-                        <div class="post mb-4 p-3 bg-light d-flex flex-column flex-md-row">
-                            <div class="post-details flex-grow-1">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="user-avatar">
-                                        @if ($post->user->avatar == null)
-                                            <img src="{{ asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 40px;">
-                                        @else
-                                            <img src="{{ asset('storage/' . $post->user->avatar) }}" alt="User Avatar" class="rounded-circle" style="width: 40px;">
-                                        @endif
-                                    </div>
-                                    <div class="ml-3">
-                                        <h5 class="mb-0">{{ $post->user->name }}</h5> <!-- Assuming you have a relationship to get user's name -->
-                                    </div>
-                                </div>
-                                <h4>{{ $post->title }}</h4>
-                                @if ($post->image)
-                                    <div>
-                                        <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="Post Image">
-                                    </div>
-                                @endif
-                                <p>{{ $post->content }}</p>
-                            </div>
-                            <div class="col-md-auto mt-3 mt-md-0 ml-md-auto">
-                                <div class="mb-3 d-flex flex-column">
-                                    <button class="btn btn-sm btn-primary mb-2">Like</button>
-                                    <button class="btn btn-sm btn-secondary">Comment</button>
-                                </div>
-                                <!-- Comments Section -->
-                                <div class="rounded bg-light p-3 mt-3">
-                                    <div class="comment mb-3 border-bottom">
-                                        <p>Comment 1</p>
-                                    </div>
-                                    <div class="comment mb-3 border-bottom">
-                                        <p>Comment 2</p>
-                                    </div>
-                                </div>
-                                <!-- End Comments Section -->
-                            </div>
-                        </div>
-                        <!-- End Post 1 -->
-                    @endforeach
-
+                <div class="post-header">
+                    <div class="avatar">
+                        @if ($post->user->avatar == null)
+                            <img src="{{ asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 40px;">
+                        @else
+                            <img src="{{ asset('storage/' . $post->user->avatar) }}" alt="User Avatar" class="rounded-circle" style="width: 40px;">
+                        @endif
+                    </div>
+                    <div class="name">{{ $post->user->name }}</div>
                 </div>
+                <div class="main-content">
+                    <div class="photo">
+                        <h4>{{ $post->title }}</h4>
+                        @if ($post->image)
+                            <div>
+                                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="Post Image">
+                            </div>
+                        @endif
+                    </div>
+                    <div class="comments-section">
+                        <div>Your comment:</div>
+                        <form action="{{ route('comment.store', $post->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <input type="text" class="form-control" id="comment" name="comment" placeholder="write your comment...">
+                            <button type="submit" class="btn btn-outline-dark btn-block">Send</button>
+                        </form>
+                        <div>Other comments:</div>
+                        @foreach ($post->comments->take(-3) as $comment)
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    @if ($comment->user->avatar == null)
+                                        <img src="{{ asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 25px;">
+                                    @else
+                                        <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="User Avatar" class="rounded-circle" style="width: 25px;">
+                                    @endif
+                                </div>
+                                <div class="comment-text">{{ $comment->user->name }}: {{ $comment->content }} </div>
+                            </div>
+                        @endforeach
+                        <a href="{{ route('comment.show', $post->id) }}"><button type="submit" class="btn btn-outline-dark btn-block"> Show More</button></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <p>{{ $post->content }}</p>
+                </div>
+                <button type="submit" class="btn btn-outline-dark btn-block">Like</button>
             </div>
-        </div>
+        @endforeach
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </div>
-</div>
 @endsection
