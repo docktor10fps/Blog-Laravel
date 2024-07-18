@@ -16,7 +16,105 @@
     <!-- Styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d0d0d0; /* Темніший фон */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #app {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Елементи ближче до навбару */
+            padding-top: 20px; /* Відстань між навбаром і контентом */
+        }
+        .posts-container {
+            display: flex;
+            flex-direction: column; /* Розміщення постів стовпцем */
+            align-items: center; /* Центрування постів */
+        }
+        .post {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 40px; /* Додаємо відстань між постами */
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 40px; 
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 10px;
+        }
+        .name {
+            font-weight: bold;
+        }
+        .content {
+            margin-bottom: 10px;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: row;
+        }
+        .photo {
+            width: 65%;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .comments-section {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+        }
+        .comments-section input, .comments-section button {
+            margin-top: 10px;
+        }
+        .comment {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .comment-avatar {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 10px;
+        }
+        .comment-text {
+            max-width: calc(100% - 35px);
+        }
+        .btn-custom {
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+            height: 30px;
+            padding: 0 10px;
+        }
+        .btn-custom:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -34,12 +132,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <!-- Example of adding menu items -->
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('post.create') }}">New Story</a>
+                            <a class="nav-link" href="{{ route('post.create') }}">New Post</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('profile.index') }}">Profile</a>
@@ -48,7 +145,6 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -93,8 +189,5 @@
    
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <!-- Підключення бібліотек Bootstrap та jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath
