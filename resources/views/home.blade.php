@@ -29,10 +29,10 @@
 
                 <div class="post-header">
                     <div class="avatar">
-                        @if ($post->user->avatar == null)
-                            <img src="{{ asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 40px;">
+                        @if ($post->user->image == null)
+                         <a href="{{route('profile.index', $post->user_id) }}"><img src="{{ asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 40px;"></a>   
                         @else
-                            <img src="{{ asset('storage/' . $post->user->avatar) }}" alt="User Avatar" class="rounded-circle" style="width: 40px;">
+                        <a href="{{route('profile.index', $post->user_id)}}"><img src="{{ asset('storage/' . $post->user->image) }}" alt="User Avatar" class="rounded-circle" style="width: 40px; height: 40px;"></a>
                         @endif
                     </div>
                     <div class="name">{{ $post->user->name }}</div>

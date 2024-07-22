@@ -131,6 +131,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                @if (Auth::user()!==null)
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Home</a>
@@ -139,10 +140,10 @@
                             <a class="nav-link" href="{{ route('post.create') }}">New Post</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('profile.index') }}">Profile</a>
+                            <a class="nav-link" href="{{route('profile.index', Auth::user()) }}">Profile</a>
                         </li>
                     </ul>
-
+                @endif
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         @guest
@@ -190,4 +191,7 @@
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    

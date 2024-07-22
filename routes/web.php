@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShowProfile\ProfileShowController;
+use App\Http\Controllers\ShowProfile\ProfileEditController;
+use App\Http\Controllers\ShowProfile\ProfileUpdateController;
+use App\Http\Controllers\ShowProfile\ProfileDeleteController;
 use App\Http\Controllers\Post\PostCreateController;
 use App\Http\Controllers\Post\PostStoreController;
 use App\Http\Controllers\Post\PostEditController;
@@ -37,8 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/role', [RoleController::class, '__invoke'])->name('role');
     });
 
-    Route::get('/profile', [ProfileShowController::class, '__invoke'])->name('profile.index');
-
+    Route::get('/profile/{user_id}', [ProfileShowController::class, '__invoke'])->name('profile.index');
+    Route::get('/profile/edit/{id}', [ProfileEditController::class, '__invoke'])->name('profile.edit');
+    Route::put('/profile/update/{id}', [ProfileUpdateController::class, '__invoke'])->name('profile.update');
+    Route::delete('/profile/delete/{id}', [ProfileDeleteController::class, '__invoke'])->name('profile.destroy');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/post/create', [PostCreateController::class, '__invoke'])->name('post.create');

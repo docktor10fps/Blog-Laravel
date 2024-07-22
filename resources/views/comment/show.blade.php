@@ -18,14 +18,17 @@
                         <p class="card-text text-black">{{ $comment->content }}</p>
                         
                         <div>
+                        <div class="d-flex">
                             <a href="#" class="btn btn-outline-dark mr-2">Like</a>
                             @can('update', $comment)
+                            
                             <a href="{{route('comment.edit',$comment->id)}}" class="btn btn-outline-dark mr-2">Edit</a>
                             <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-dark mr-2" onclick="return confirm('Ви впевнені, що хочете видалити цей пост?');">Видалити</button>
                                 </form>
+                                </div>
                             @endcan
                         </div>
     
