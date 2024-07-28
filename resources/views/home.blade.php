@@ -58,10 +58,10 @@
                         @foreach ($post->comments->take(-3) as $comment)
                             <div class="comment">
                                 <div class="comment-avatar">
-                                    @if ($comment->user->avatar == null)
-                                        <img src="{{ asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 25px;">
+                                    @if ($comment->user->image == null)
+                                    <a href="{{route('profile.index', $post->user_id) }}"><img src="{{asset('storage/images/default_avatar.png') }}" alt="Default User Avatar" class="rounded-circle" style="width: 25px;"></a>
                                     @else
-                                        <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="User Avatar" class="rounded-circle" style="width: 25px;">
+                                    <a href="{{route('profile.index', $post->user_id) }}"><img src="{{ asset('storage/' . $comment->user->image) }}" alt="User Avatar" class="rounded-circle" style="width: 25px; height: 25px;"></a>
                                     @endif
                                 </div>
                                 <div class="comment-text">{{ $comment->user->name }}: {{ $comment->content }} </div>
@@ -72,6 +72,15 @@
                 </div>
                 <div class="content">
                     <p>{{ $post->content }}</p>
+                </div>
+                <div class="tags">
+               
+                    @foreach ($post->tags as $tag )
+                   
+                     <a href= "{{route('tag.index', $tag->id)}}">#{{ $tag->title }} </a>
+                  
+                    @endforeach
+              
                 </div>
                 <button type="submit" class="btn btn-outline-dark btn-block">Like</button>
             </div>

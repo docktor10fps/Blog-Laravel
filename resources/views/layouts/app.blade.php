@@ -10,10 +10,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
+      <!-- Fonts -->
+      <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <style>
@@ -142,6 +145,22 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('profile.index', Auth::user()) }}">Profile</a>
                         </li>
+                        <li class="nav-item">
+                            @if (session('error'))
+                                 <div class=" text-danger">
+                                {{ session('error') }}
+                                 </div>
+                         @endif
+                                <form action="{{ route('search') }}" method="POST" class="d-flex align-items-center">
+                            @csrf
+                            <input type="hidden" name="post_id" value="">
+                            <input type="text" class="form-control mr-2" id="comment" name="search" placeholder="friend search ...">
+                            <button type="submit" class="btn btn-outline-dark btn-sm">
+                                <i class="fas fa-arrow-right">></i>
+                            </button>
+                        </form>
+                        </li>
+                        <div>
                     </ul>
                 @endif
                     <!-- Right Side Of Navbar -->
@@ -194,4 +213,21 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('#tags').select2({
+            tags: true,
+            tokenSeparators: [',', ' ']
+        });
+    });
+</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     
