@@ -28,7 +28,18 @@
                                 <button type="submit" class="btn btn-outline-dark mr-2" onclick="return confirm('Ви впевнені, що хочете видалити цей профіль?');">Delete</button>
                             </form>
                         @else
-                            <button class="btn btn-outline-dark mr-2">Follow</button>
+                          
+                            @if (auth()->user()->followings->contains($user->id))
+    <form action="{{ route('unfollow', $user) }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-outline-dark mr-2">Unfollow</button>
+    </form>
+@else
+    <form action="{{ route('follow', $user) }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-outline-dark mr-2">Follow</button>
+    </form>
+@endif
                         @endcan
                     </div>
                 </div>

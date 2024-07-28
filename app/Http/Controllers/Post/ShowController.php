@@ -10,8 +10,6 @@ class ShowController extends Controller
 {
     public function __invoke()
     {
-        // $posts = Post::all();
-        
-        // return view(dd($posts));        
+
     }
 }

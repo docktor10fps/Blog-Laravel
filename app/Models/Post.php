@@ -11,14 +11,13 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $fillable = [
         'title', 'content', 'slug', 'image', 'published_at', 'user_id'
     ];
-   
-
-   
-
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class,'post_tags', 'post_id', 'tag_id');
+    }
 
     /**
      * Отримати користувача, який створив цей пост.

@@ -14,19 +14,12 @@ class ProfileUpdateController extends Controller
     {
         $user = User::findOrFail($id);
 
-      //  $this->authorize('update', $post);
-
-        // $currentUserId = Auth::id();
-        // $postUserId = $post->user_id;
-        
         $user->name = $request->input('name');
-        
 
-        if ($request->hasFile('avatar')) {
-            $imagePath = $request->file('avatar')->store('image', 'public');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('image', 'public');
             $user->image = $imagePath;
         }
-
         $user->save();
 
         return redirect()->route('profile.index', $user->id);
